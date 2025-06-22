@@ -1,0 +1,36 @@
+"error": {
+        "errors": {
+            "copies": {
+                "name": "ValidatorError",
+                "message": "Copies must be a positive number",
+                "properties": {
+                    "message": "Copies must be a positive number",
+                    "type": "required",
+                    "path": "copies"
+                },
+                "kind": "required",
+                "path": "copies"
+            }
+        },
+        "_message": "Book validation failed",
+        "name": "ValidationError",
+        "message": "Book validation failed: copies: Copies must be a positive number"
+    }
+
+    "error": {
+    "name": "ValidationError",
+    "errors": {
+      "copies": {
+        "message": "Copies must be a positive number",
+        "name": "ValidatorError",
+        "properties": {
+          "message": "Copies must be a positive number",
+          "type": "min",
+          "min": 0
+        },
+        "kind": "min",
+        "path": "copies",
+        "value": -5
+      }
+    }
+  }
