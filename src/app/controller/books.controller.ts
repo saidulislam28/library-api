@@ -5,13 +5,13 @@ import { Book } from "../model/books.model";
 export const booksRoutes = express.Router();
 
 const booksZodSchema = z.object({
-  title: z.string(),
-  author: z.string(),
-  genre: z.string(),
-  isbn: z.string(),
-  description: z.string(),
-  copies: z.number(),
-  available: z.boolean(),
+  title: z.string().optional(),
+  author: z.string().optional(),
+  genre: z.string().optional(),
+  isbn: z.string().optional(),
+  description: z.string().optional(),
+  copies: z.number().optional(),
+  available: z.boolean().optional(),
 });
 
 booksRoutes.post("/", async (req, res) => {
@@ -34,22 +34,31 @@ booksRoutes.post("/", async (req, res) => {
 });
 
 booksRoutes.get("/", async (req, res) => {
-  const query: any = req.query;
   try {
-    console.log(query);
-    const books = await Book.find({ genre: { $eq: query.filter } })
-      .sort({ createdAt: query.sort })
-      .limit(query.limit);
+    const { filter, sortBy, sort, limit = 10 }: any = req.query;
+    const query: any = {};
+    if (filter) {
+      query.genre = filter;
+    }
+    let booksQuery = Book.find(query);
+    if (sortBy && sort) {
+      const sortOrder = sort === "asc" ? "asc" : "desc";
+      booksQuery = booksQuery.sort({ [sortBy]: sortOrder });
+    }
+    if (limit) {
+      booksQuery = booksQuery.limit(parseInt(limit));
+    }
+    const books = await booksQuery;
     res.status(200).json({
       success: true,
-      message: "Successfully fetched",
+      message: "Books fetched successfully",
       data: books,
     });
-  } catch (error) {
-    res.status(400).json({
+  } catch (error: any) {
+    res.status(500).json({
       success: false,
-      message: "Invalid request,  nothing is found",
-      error: error,
+      message: "Something went wrong",
+      error: error.message,
     });
   }
 });
@@ -74,12 +83,13 @@ booksRoutes.get("/:bookId", async (req, res) => {
   }
 });
 
-booksRoutes.patch("/:id", async (req, res) => {
+booksRoutes.patch("/:bookId", async (req, res) => {
   // const body = req.body;
   try {
     const body = await booksZodSchema.parseAsync(req.body);
-    const id = req.params.id;
-    const updatedBook = await Book.findOneAndUpdate({ _id: id }, body, {
+    console.log("body", body);
+    const bookId = req.params.bookId;
+    const updatedBook = await Book.findOneAndUpdate({ _id: bookId }, body, {
       returnOriginal: false,
     }).select("-__v");
     res.status(200).json({
@@ -90,16 +100,16 @@ booksRoutes.patch("/:id", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Invalid values",
+      message: "Invalid values for update",
       error: error,
     });
   }
 });
 
-booksRoutes.delete("/:id", async (req, res) => {
+booksRoutes.delete("/:bookId", async (req, res) => {
   try {
-    const id = req.params.id;
-    const book = await Book.findByIdAndDelete(id);
+    const bookId = req.params.bookId;
+    const book = await Book.findByIdAndDelete(bookId);
 
     res.status(200).json({
       success: true,
@@ -114,132 +124,3 @@ booksRoutes.delete("/:id", async (req, res) => {
     });
   }
 });
-
-// const createNotesZodSchema = z.object({
-//   title: z.string(),
-//   email: z.string(),
-//   content: z.string(),
-//   category: z.string().optional(),
-//   pinned: z.boolean(),
-//   user_id: z.string(),
-// });
-
-// const userZodSchema = z.object({
-//   name: z.string(),
-//   email: z.string(),
-//   password: z.string(),
-// });
-
-// notesRoutes.post("/create-user", async (req, res) => {
-//   try {
-//     const body = await userZodSchema.parseAsync(req.body);
-
-//     // const password = await bcrypt.hash(body.password, 10);
-//     // body.password = password;
-//     // console.log(password)
-
-//     // const user = new User(body);
-//     // // const password = await user.hashPassword(body.password);
-//     // // user.password = password;
-
-//     // // console.log(password);
-//     // // // console.log(body);
-
-//     // // await user.save();
-
-//     const user = await User.create(body);
-
-//     // const user = await User.create(body);
-//     res.status(201).json({
-//       success: true,
-//       message: "User created Successfully",
-//       user,
-//     });
-//   } catch (error: any) {
-//     res.status(400).json({
-//       success: false,
-//       message: error.message,
-//       error,
-//     });
-//   }
-// });
-// notesRoutes.post("/create-note", async (req, res) => {
-//   try {
-//     const body = await createNotesZodSchema.parseAsync(req.body);
-//     const note = await Note.create(body);
-//     res.status(201).json({
-//       success: true,
-//       message: "Note created Successfully",
-//       note,
-//     });
-//   } catch (error: any) {
-//     res.status(400).json({
-//       success: false,
-//       message: error.message,
-//       error,
-//     });
-//   }
-// });
-
-// notesRoutes.get("/", async (req, res) => {
-//   const notes = await Note.find().populate("user_id", { name: 1 });
-//   res.status(201).json({
-//     success: true,
-//     message: "Note created Successfully",
-//     notes,
-//   });
-// });
-// notesRoutes.get("/user", async (req, res) => {
-//   const user = await User.find();
-//   res.status(201).json({
-//     success: true,
-//     message: "Note created Successfully",
-//     user,
-//   });
-// });
-
-// notesRoutes.get("/get-one/:id", async (req, res) => {
-//   const { id } = req.params;
-
-//   const notes = await Note.findById(id);
-
-//   res.status(201).json({
-//     success: true,
-//     message: "Note created Successfully",
-//     notes,
-//   });
-// });
-// notesRoutes.patch("/update-one/:id", async (req, res) => {
-//   const { id } = req.params;
-//   const body = req.body;
-
-//   const notes = await Note.findByIdAndUpdate(id, body, { new: true });
-
-//   res.status(201).json({
-//     success: true,
-//     message: "Note created Successfully",
-//     notes,
-//   });
-// });
-// notesRoutes.delete("/delete/:id", async (req, res) => {
-//   const { id } = req.params;
-
-//   const notes = await Note.findByIdAndDelete(id);
-
-//   res.status(201).json({
-//     success: true,
-//     message: "Note created Successfully",
-//     notes,
-//   });
-// });
-// notesRoutes.delete("/user/:id", async (req, res) => {
-//   const { id } = req.params;
-
-//   const notes = await User.findOneAndDelete({ _id: id });
-
-//   res.status(201).json({
-//     success: true,
-//     message: "Note created Successfully",
-//     notes,
-//   });
-// });

@@ -1,7 +1,3 @@
-// export interface UserInstanceMethods {
-//   hashPassword(password: string): string;
-// }
-
 export interface Books {
   title: string;
   author: string;
@@ -11,4 +7,3 @@ export interface Books {
   copies: number;
   available: true;
 }
-
