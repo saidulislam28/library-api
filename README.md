@@ -21,3 +21,29 @@ Features:
 <h4>
 Technology Used:
 </h4>
+<ul>
+<li>Node.js</li>
+<li>Express.js</li>
+<li>MongoDB + Mongoose</li>
+<li>Typescript</li>
+</ul>
+
+<h4>
+How to use ?
+</h4>
+
+- Clone the project
+- Open project terminal
+- npm install
+- npm run dev
+
+<h4>
+Endpoints:
+</h4>
+
+* baseUrl/books => Method : GET (To get all the books) 
+* baseUrl/books?filter=COMMERCE&sortBy=createdAt&sort=desc&limit=5 => Method : GET >(To get specific books with query params) 
+* baseUrl/books/:bookId => Method : Patch (To update any data in book table) 
+* baseUrl/books/:bookId => Method : Delete (To delete any data from book table)
+* baseUrl/borrow => Method : Post (Send {book: book_id, quantity: number, dueDate: Date} this data with the api body to borrow a book)
+* baseUrl/borrow => Method : Get (Can get book title, isbn and count of borrows per book).
