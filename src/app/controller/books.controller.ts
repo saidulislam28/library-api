@@ -87,7 +87,6 @@ booksRoutes.patch("/:bookId", async (req, res) => {
   // const body = req.body;
   try {
     const body = await booksZodSchema.parseAsync(req.body);
-    console.log("body", body);
     const bookId = req.params.bookId;
     const updatedBook = await Book.findOneAndUpdate({ _id: bookId }, body, {
       returnOriginal: false,
