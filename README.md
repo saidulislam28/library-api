@@ -29,7 +29,7 @@ Technology Used:
 </ul>
 
 <h4>
-How to use ?
+How to use this project locally ?
 </h4>
 
 - Clone the project
