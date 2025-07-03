@@ -10,9 +10,9 @@ const borrow_controller_1 = require("./app/controller/borrow.controller");
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
-app.use("/books", books_controller_1.booksRoutes);
-app.use("/borrow", borrow_controller_1.borrowRoutes);
-app.get("/", (req, res) => {
+app.use("/api/books", books_controller_1.booksRoutes);
+app.use("/api/borrow", borrow_controller_1.borrowRoutes);
+app.get("/api", (req, res) => {
     res.send({ appRunning: true, message: "App run successfully!!!!!" });
 });
 exports.default = app;

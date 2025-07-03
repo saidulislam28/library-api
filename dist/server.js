@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = __importDefault(require("./app"));
 const mongoose_1 = __importDefault(require("mongoose"));
 let server;
-const port = 8000;
+const port = process.env.PORT || 8000;
 async function main() {
     try {
         await mongoose_1.default.connect("mongodb+srv://saidulislams9028:rp6idvjsAZjfqFlv@cluster0.a1ptd7f.mongodb.net/library");

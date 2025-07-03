@@ -85,7 +85,7 @@ exports.booksRoutes.get("/:bookId", async (req, res) => {
         });
     }
 });
-exports.booksRoutes.patch("/:bookId", async (req, res) => {
+exports.booksRoutes.put("/:bookId", async (req, res) => {
     // const body = req.body;
     try {
         const body = await booksZodSchema.parseAsync(req.body);

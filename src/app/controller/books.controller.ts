@@ -83,7 +83,7 @@ booksRoutes.get("/:bookId", async (req, res) => {
   }
 });
 
-booksRoutes.patch("/:bookId", async (req, res) => {
+booksRoutes.put("/:bookId", async (req, res) => {
   // const body = req.body;
   try {
     const body = await booksZodSchema.parseAsync(req.body);
