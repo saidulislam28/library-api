@@ -10,6 +10,9 @@ app.use(express.json());
 app.use("/api/books", booksRoutes);
 app.use("/api/borrow", borrowRoutes);
 
+app.get("/", (req, res) => {
+  res.send({ appRunning: true, message: "App run successfully!!!!!" });
+});
 app.get("/api", (req, res) => {
   res.send({ appRunning: true, message: "App run successfully!!!!!" });
 });
