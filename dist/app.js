@@ -12,6 +12,9 @@ app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use("/api/books", books_controller_1.booksRoutes);
 app.use("/api/borrow", borrow_controller_1.borrowRoutes);
+app.get("/", (req, res) => {
+    res.send({ appRunning: true, message: "App run successfully!!!!!" });
+});
 app.get("/api", (req, res) => {
     res.send({ appRunning: true, message: "App run successfully!!!!!" });
 });

@@ -27,12 +27,54 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{base_url}}/books",
+					"raw": "{{base_url}}/api/books",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
+						"api",
 						"books"
+					]
+				},
+				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+			},
+			"response": []
+		},
+		{
+			"name": "base url",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"The Theory of Everything\",\r\n  \"author\": \"Stephen Hawking\",\r\n  \"genre\": \"SCIENCE\",\r\n  \"isbn\": \"9780553380163\",\r\n  \"description\": \"An overview of cosmology and black holes.\",\r\n  \"copies\": 5,\r\n  \"available\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api"
 					]
 				},
 				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
@@ -68,11 +110,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/books/68581de1b84909831ee7c587",
+					"raw": "{{base_url}}/api/books/68581de1b84909831ee7c587",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
+						"api",
 						"books",
 						"68581de1b84909831ee7c587"
 					]
@@ -103,7 +146,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"title\": \"The Theory of Joy bangla\",\n    \"author\": \"Stephen Hawking\",\n    \"genre\": \"commerce\",\n    \"isbn\": \"9780553380163\",\n    \"description\": \"An overview of cosmology and black holes.\",\n    \"copies\": 10,\n    \"available\": true\n}",
+					"raw": "{\n    \"title\": \"World Affairs\",\n    \"author\": \"Kazi Sourov\",\n    \"genre\": \"GeoPolitics\",\n    \"isbn\": \"9780553380163\",\n    \"description\": \"An overview of Animal and Planel\",\n    \"copies\": 10,\n    \"available\": true\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -111,11 +154,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/books",
+					"raw": "{{base_url}}/api/books",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
+						"api",
 						"books"
 					]
 				},
@@ -145,7 +189,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"book\": \"68596ae4777cc2ed84cc1add\",\n    \"quantity\": 3,\n    \"dueDate\": \"2025-07-18T00:00:00.000Z\"\n}",
+					"raw": "{\n    \"book\": \"686b69a4e2840cf23c85ff36\",\n    \"quantity\": 20,\n    \"dueDate\": \"2025-07-18\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -153,11 +197,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/borrow",
+					"raw": "{{base_url}}/api/borrow",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
+						"api",
 						"borrow"
 					]
 				},
@@ -195,11 +240,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/borrow",
+					"raw": "{{base_url}}/api/borrow",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
+						"api",
 						"borrow"
 					]
 				},
@@ -225,11 +271,11 @@
 				}
 			],
 			"request": {
-				"method": "PATCH",
+				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"copies\": 70\n}",
+					"raw": "{\n    \"copies\": 29\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -237,13 +283,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/books/685652512b980de6ff798fda",
+					"raw": "{{base_url}}/api/books/68668e7d80cc10793a5f8e1d",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
+						"api",
 						"books",
-						"685652512b980de6ff798fda"
+						"68668e7d80cc10793a5f8e1d"
 					]
 				},
 				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
@@ -280,13 +327,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/books/68569615c841d22081bfbbb8",
+					"raw": "{{base_url}}/api/books/68668e7d80cc10793a5f8e1d",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
+						"api",
 						"books",
-						"68569615c841d22081bfbbb8"
+						"68668e7d80cc10793a5f8e1d"
 					]
 				},
 				"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
@@ -322,6 +370,11 @@
 		{
 			"key": "base_url",
 			"value": "http://localhost:8000"
+		},
+		{
+			"key": "live_url",
+			"value": "https://library-api-lilac.vercel.app",
+			"type": "string"
 		}
 	]
 }
